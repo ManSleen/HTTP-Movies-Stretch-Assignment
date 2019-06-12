@@ -1,6 +1,7 @@
-import React from 'react';
-import axios from 'axios';
-import MovieCard from './MovieCard';
+import React from "react";
+import axios from "axios";
+import MovieCard from "./MovieCard";
+import { readSync } from "fs";
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,17 @@ export default class Movie extends React.Component {
   }
 
   fetchMovie = id => {
+    axios
+      .get(`http://localhost:5000/api/movies/${id}`)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          movie: res.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
     // this function needs to fire off a get request to localhost:5000/api/movies/:id
     // note that the id is dynamic.
   };
